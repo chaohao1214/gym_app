@@ -8,6 +8,8 @@ const Home = () => {
     const [bodyPart, setBodyPart] = useState('all')
     // exercises is home page data to be passed to Exercises component
     const [exercises, setExercises] = useState([]);
+
+
     return (
         <Box>
             <HeroBanner />
