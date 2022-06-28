@@ -9,6 +9,8 @@ import SimilarExercises from '../components/SimilarExercises';
 const ExerciseDetail = () => {
     const [exerciseDetail, setExerciseDetail] = useState({});
     const [exerciseVideos, setExerciseVideos] = useState([]);
+    const [equipmentExercises, setEquipmentExercises] = useState([]);
+    const [targetMuscleExercises, setTargetMuscleExercises] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -17,11 +19,19 @@ const ExerciseDetail = () => {
             const youtubeURL = 'https://youtube-search-and-download.p.rapidapi.com/';
 
             const exerciseDetailData = await fetchData(`${exerciseURL}/exercises/exercise/${id}`, exercisesOptions);
-
             setExerciseDetail(exerciseDetailData);
+
 
             const exerciseVideoData = await fetchData(`${youtubeURL}/search?query=${exerciseDetailData.name}`, youtubeOptions);
             setExerciseVideos(exerciseVideoData.contents);
+
+            const targetMuscleExercisesData = await fetchData(`${exerciseURL}/exercises/target/${exerciseDetailData.target}`, exercisesOptions);
+            setTargetMuscleExercises(targetMuscleExercisesData);
+
+
+            const equipmentExercisesData = await fetchData(`${exerciseURL}/exercises/equipment/${exerciseDetailData.equipment}`, exercisesOptions);
+            setEquipmentExercises(equipmentExercisesData);
+
         }
 
         fetchExercisesData()
@@ -31,7 +41,7 @@ const ExerciseDetail = () => {
         <Box>
             <Detail exerciseDetail={exerciseDetail} />
             <ExerciseVideos exerciseVideos={exerciseVideos} name={exerciseDetail.name} />
-            <SimilarExercises />
+            <SimilarExercises targetMuscleExercises={targetMuscleExercises} equipmentExercises={equipmentExercises} />
         </Box>
     )
 }

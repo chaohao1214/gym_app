@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const ExerciseCard = ({ exercise }) => {
     // exercise image is a string with the image url from the API
-    console.log(exercise);
+
     return (
         <Link className='exercise-card' to={`/exercise/${exercise.id}`}>
             <img src={exercise.gifUrl} alt={exercise.name} loading='lazy' />
